@@ -651,3 +651,13 @@ a:hover {
         white-space: pre-wrap;
     }
 }
+
+#invisible-profile {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
