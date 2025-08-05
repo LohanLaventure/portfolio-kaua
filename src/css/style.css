@@ -618,3 +618,36 @@ a:hover {
     }
 }
 
+.hidden-print-message {
+    display: none;
+}
+
+@media print {
+    .hidden-print-message {
+        display: block !important;
+        font-size: 7px !important;
+        line-height: 1.2;
+        opacity: 0.02 !important;
+        color: #000 !important;
+        max-width: 100%;
+        margin-top: 2rem;
+        white-space: pre-wrap;
+    }
+}
+
+.hidden-print-message {
+    display: none;
+}
+
+@media print {
+    .hidden-print-message {
+        display: block !important;
+        font-size: 7px !important;
+        line-height: 1.2;
+        opacity: 0.02 !important;
+        color: #000 !important;
+        max-width: 100%;
+        margin-top: 2rem;
+        white-space: pre-wrap;
+    }
+}
