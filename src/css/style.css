@@ -674,7 +674,13 @@ a:hover {
     width: 40px;
     height: 40px;
     object-fit: contain;
-    border-radius: 50%; /* se quiser manter circular */
-    background-color: white; /* opcional: para fundo branco */
-    padding: 5px; /* opcional: separação interna */
+    border-radius: 50%; 
+    background-color: white; 
+    padding: 5px; 
 }
+.contact-icon img.icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
