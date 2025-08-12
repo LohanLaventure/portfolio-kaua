@@ -1,192 +1,300 @@
 // ==== Dark mode ====
 class DarkModeToggle {
-    constructor() {
-        // lê preferência salva ou usa prefer-color-scheme do sistema como fallback
-        const saved = localStorage.getItem('darkMode');
-        if (saved === null) {
-            this.isDark = window.matchMedia &&
-                          window.matchMedia('(prefers-color-scheme: dark)').matches;
-        } else {
-            this.isDark = saved === 'true';
-        }
-        this.init();
+  constructor() {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === null) {
+      this.isDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } else {
+      this.isDark = saved === 'true';
+    }
+    this.init();
+  }
+
+  init() {
+    this.createToggleButton();
+    this.applyTheme();
+    this.bindEvents();
+  }
+
+  createToggleButton() {
+    const toggle = document.createElement('button');
+    toggle.className = 'dark-mode-toggle';
+    toggle.innerHTML = this.isDark ? '☀️' : '🌙';
+    toggle.setAttribute('aria-label', 'Alternar tema (claro/escuro)');
+    document.body.appendChild(toggle);
+    this.toggleButton = toggle;
+  }
+
+  bindEvents() {
+    this.toggleButton.addEventListener('click', () => this.toggle());
+  }
+
+  toggle() {
+    this.isDark = !this.isDark;
+    this.applyTheme();
+    localStorage.setItem('darkMode', this.isDark);
+  }
+
+  applyTheme() {
+    const root = document.documentElement;
+
+    if (this.isDark) {
+      root.style.setProperty('--bg-primary', 'var(--color-gray-900)');
+      root.style.setProperty('--bg-secondary', 'var(--color-gray-800)');
+      root.style.setProperty('--text-primary', 'var(--color-gray-100)');
+      root.style.setProperty('--text-secondary', 'var(--color-gray-300)');
+      root.style.setProperty('--border-color', 'var(--color-gray-700)');
+      root.style.setProperty('--footer-ink', 'var(--color-white)');
+      root.style.setProperty('--icon-filter', 'invert(1)');
+    } else {
+      root.style.setProperty('--bg-primary', 'var(--color-white)');
+      root.style.setProperty('--bg-secondary', 'var(--color-gray-100)');
+      root.style.setProperty('--text-primary', 'var(--color-gray-900)');
+      root.style.setProperty('--text-secondary', 'var(--color-gray-600)');
+      root.style.setProperty('--border-color', 'var(--color-gray-200)');
+      root.style.setProperty('--footer-ink', 'var(--color-black)');
+      root.style.setProperty('--icon-filter', 'invert(0)');
     }
 
-    init() {
-        this.createToggleButton();
-        this.applyTheme();
-        this.bindEvents();
+    if (this.toggleButton) {
+      this.toggleButton.innerHTML = this.isDark ? '☀️' : '🌙';
     }
-
-    createToggleButton() {
-        const toggle = document.createElement('button');
-        toggle.className = 'dark-mode-toggle';
-        toggle.innerHTML = this.isDark ? '☀️' : '🌙';
-        toggle.setAttribute('aria-label', 'Alternar tema (claro/escuro)');
-        document.body.appendChild(toggle);
-        this.toggleButton = toggle;
-    }
-
-    bindEvents() {
-        this.toggleButton.addEventListener('click', () => this.toggle());
-    }
-
-    toggle() {
-        this.isDark = !this.isDark;
-        this.applyTheme();
-        localStorage.setItem('darkMode', this.isDark);
-    }
-
-    applyTheme() {
-        const root = document.documentElement;
-
-        if (this.isDark) {
-            root.style.setProperty('--bg-primary', 'var(--color-gray-900)');
-            root.style.setProperty('--bg-secondary', 'var(--color-gray-800)');
-            root.style.setProperty('--text-primary', 'var(--color-gray-100)');
-            root.style.setProperty('--text-secondary', 'var(--color-gray-300)');
-            root.style.setProperty('--border-color', 'var(--color-gray-700)');
-
-            // NOVO: tinta do footer e filtro dos ícones (ícones brancos no dark)
-            root.style.setProperty('--footer-ink', 'var(--color-white)');
-            root.style.setProperty('--icon-filter', 'invert(1)');
-        } else {
-            root.style.setProperty('--bg-primary', 'var(--color-white)');
-            root.style.setProperty('--bg-secondary', 'var(--color-gray-100)');
-            root.style.setProperty('--text-primary', 'var(--color-gray-900)');
-            root.style.setProperty('--text-secondary', 'var(--color-gray-600)');
-            root.style.setProperty('--border-color', 'var(--color-gray-200)');
-
-            // NOVO: tinta do footer e filtro dos ícones (ícones pretos no claro)
-            root.style.setProperty('--footer-ink', 'var(--color-black)');
-            root.style.setProperty('--icon-filter', 'invert(0)');
-        }
-
-        if (this.toggleButton) {
-            this.toggleButton.innerHTML = this.isDark ? '☀️' : '🌙';
-        }
-    }
+  }
 }
 
 // ==== Scroll reveal ====
 class ScrollReveal {
-    constructor() {
-        this.elements = [];
-        this.init();
-    }
+  constructor() {
+    this.elements = [];
+    this.init();
+  }
 
-    init() {
-        this.bindEvents();
-        this.reveal(); // primeira checada
-    }
+  init() {
+    this.bindEvents();
+    this.reveal();
+  }
 
-    bindEvents() {
-        window.addEventListener('scroll', () => this.reveal());
-        window.addEventListener('resize', () => this.reveal());
-    }
+  bindEvents() {
+    window.addEventListener('scroll', () => this.reveal());
+    window.addEventListener('resize', () => this.reveal());
+  }
 
-    observe(selector) {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-            element.classList.add('scroll-reveal');
-            this.elements.push(element);
-        });
-    }
+  observe(selector) {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach((el) => {
+      el.classList.add('scroll-reveal');
+      this.elements.push(el);
+    });
+  }
 
-    reveal() {
-        const windowHeight = window.innerHeight;
-        const scrollTop = window.pageYOffset;
-        const revealPoint = 100;
+  reveal() {
+    const windowHeight = window.innerHeight;
+    const scrollTop = window.pageYOffset;
+    const revealPoint = 100;
 
-        this.elements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            const elementTop = rect.top + scrollTop - (document.documentElement.clientTop || 0);
-            const elementHeight = element.offsetHeight;
+    this.elements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      const elementTop =
+        rect.top + scrollTop - (document.documentElement.clientTop || 0);
+      const elementHeight = element.offsetHeight;
 
-            if (
-                scrollTop + windowHeight - revealPoint > elementTop &&
-                scrollTop < elementTop + elementHeight
-            ) {
-                element.classList.add('revealed');
-            }
-        });
-    }
+      if (
+        scrollTop + windowHeight - revealPoint > elementTop &&
+        scrollTop < elementTop + elementHeight
+      ) {
+        element.classList.add('revealed');
+      }
+    });
+  }
 }
 
 // ==== Smooth scrolling para âncoras ====
 function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            // ignora links "#" ou inexistentes
-            if (!href || href === '#') return;
-            const target = document.querySelector(href);
-            if (!target) return;
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
 
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  });
 }
 
 // ==== Cálculo de idade ====
 function calculateAge(birthDateString) {
-    const birth = new Date(birthDateString);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-    return age;
+  const birth = new Date(birthDateString);
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
 }
 
-// ==== Boot ====
-document.addEventListener('DOMContentLoaded', function () {
-    // Dark mode
-    new DarkModeToggle();
+// ==== Boot + Menu/Gooey ====
+document.addEventListener('DOMContentLoaded', () => {
+  // Dark mode
+  new DarkModeToggle();
 
-    // Scroll reveal
-    const scrollReveal = new ScrollReveal();
-    scrollReveal.observe('.section');
-    scrollReveal.observe('.card');
-    scrollReveal.observe('.skill-item');
-    scrollReveal.observe('.experience-item');
-    scrollReveal.observe('.contact-item');
+  // Scroll reveal
+  const sr = new ScrollReveal();
+  sr.observe('.section');
+  sr.observe('.card');
+  sr.observe('.skill-item');
+  sr.observe('.experience-item');
+  sr.observe('.contact-item');
 
-    // Smooth scrolling
-    initSmoothScrolling();
+  // Smooth anchors
+  initSmoothScrolling();
 
-    // Update idade dinâmica
-    const ageElem = document.getElementById('idade');
-    if (ageElem) ageElem.textContent = calculateAge('2005-06-09');
+  // Idade dinâmica
+  const ageElem = document.getElementById('idade');
+  if (ageElem) ageElem.textContent = calculateAge('2005-06-09');
 
-    // Fade-in inicial
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
+  // Fade-in inicial
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.opacity = '1';
+  }, 100);
+
+  // ===== Menu lateral (um único controlador) =====
+  // move o botão de tema para junto do menu
+  const actions = document.querySelector('.site-menu-actions');
+  const darkBtn = document.querySelector('.dark-mode-toggle');
+  if (actions && darkBtn && darkBtn.parentElement !== actions) {
+    actions.prepend(darkBtn);
+  }
+
+  const menuCb    = document.getElementById('site-menu-toggle');
+  const menuBtn   = document.querySelector('label.site-menu-btn');
+  const menuPanel = document.getElementById('site-menu-panel');
+
+  const gooCb       = document.getElementById('goo-open');               // checkbox do contatos
+  const gooContainer= document.querySelector('.site-menu-contact');      // <li> do contatos
+
+  if (!menuCb || !menuBtn || !menuPanel) return;
+
+  const syncAria = () => {
+    const open = menuCb.checked;
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (!open && gooCb) gooCb.checked = false; // fechar contatos ao fechar menu
+  };
+  syncAria();
+  menuCb.addEventListener('change', syncAria);
+
+  // ESC fecha tudo
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (gooCb) gooCb.checked = false;
+    if (menuCb.checked) menuCb.checked = false;
+    syncAria();
+  });
+
+  // Clique fora: fecha menu; se o menu continuar aberto, clique fora do bloco "contatos" fecha os ícones
+  document.addEventListener('click', (e) => {
+    const insideActions = e.target.closest('.site-menu-actions');
+    const insideCard    = e.target.closest('.site-menu-card');
+
+    // fecha o menu quando clicar fora de tudo
+    if (!insideActions && !insideCard && menuCb.checked) {
+      menuCb.checked = false;
+      if (gooCb) gooCb.checked = false;
+      syncAria();
+      return;
+    }
+
+    // se o menu está aberto e os contatos também, clicar fora do bloco de contatos fecha só os contatos
+    if (menuCb.checked && gooCb && gooCb.checked) {
+      const insideGoo = e.target.closest('.site-menu-contact');
+      if (!insideGoo) gooCb.checked = false;
+    }
+  });
 });
 
-// ==== Utils (se precisar em algum lugar) ====
-const utils = {
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-    isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-};
+// Evita seleção visual ao clicar rápido nos contatos
+document.querySelectorAll('.site-menu-contact a.goo-item').forEach(a => {
+  // remove qualquer seleção residual no clique/duplo-clique
+  a.addEventListener('click', () => {
+    const sel = window.getSelection && window.getSelection();
+    if (sel && sel.removeAllRanges) sel.removeAllRanges();
+  });
+  a.addEventListener('dblclick', () => {
+    const sel = window.getSelection && window.getSelection();
+    if (sel && sel.removeAllRanges) sel.removeAllRanges();
+  });
+});
+
+// ===== Copiar e-mail para a área de transferência =====
+(function setupCopyEmail(){
+  const EMAIL_SELECTOR = 'a.copy-email';
+  const EMAIL_FALLBACK = 'kauahenriquepessoal@gmail.com';
+
+  // Cria o toast (uma vez)
+  let toast = document.querySelector('.clipboard-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'clipboard-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.textContent = 'Copiado';
+    document.body.appendChild(toast);
+  }
+
+  function showToast(msg){
+    toast.textContent = msg || 'Copiado';
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), 1500);
+  }
+
+  async function copyText(text){
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch(_) {}
+    // Fallback velho (iOS/Android antigos e desktop legacy)
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); } catch(_) { /* ignore */ }
+    document.body.removeChild(ta);
+    return true;
+  }
+
+  function handlerClick(e){
+    // Se usuário segurar Ctrl/Cmd/Shift/Alt, deixamos abrir o mailto
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+
+    e.preventDefault();
+    const a = e.currentTarget;
+    const text = a.getAttribute('data-copy') || EMAIL_FALLBACK;
+
+    copyText(text).then(() => showToast('E-mail copiado'));
+  }
+
+  // Liga os handlers (também funciona se você chamar de novo após trocar HTML)
+  function bindAll(){
+    document.querySelectorAll(EMAIL_SELECTOR).forEach(a => {
+      if (!a._copyBound) {
+        a.addEventListener('click', handlerClick);
+        a._copyBound = true;
+      }
+    });
+  }
+
+  // Bind inicial e após navegação dinâmica, se houver
+  document.addEventListener('DOMContentLoaded', bindAll);
+  bindAll();
+})();
