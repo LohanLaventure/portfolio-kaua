@@ -339,24 +339,32 @@ a:hover {
 /* Ícones do footer */
 .footer-icons {
   display: flex;
-  gap: 1rem; /* mais espaçamento entre eles */
+  gap: 1rem; 
   align-items: center;
 }
 .footer-icons img {
-  width: 22.66px;  /* 3% maior que 22px */
+  width: 22.66px;  
   height: 22.66px;
   object-fit: contain;
   display: block;
 }
 .footer .brand {
-  text-align: center;
+  display: flex;
+  gap: 2rem; 
 }
-.footer .brand strong {
+.footer .brand-col strong,
+.footer .brand-col a,
+.footer .brand-col span {
   display: block;
-  margin-bottom: calc(0.25rem - 1.5px);  
+  margin: 0;
 }
 .footer .brand a {
   display: block; 
+}
+.footer .brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem; /* distância vertical dentro da coluna */
 }
 
 
