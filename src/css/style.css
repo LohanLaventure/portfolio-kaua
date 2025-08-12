@@ -753,3 +753,59 @@ main {
   overflow:hidden;
   pointer-events:none;
 }
+
+/* ===== MOBILE-ONLY FIX (não afeta desktop) ====================== */
+@media (max-width: 768px){
+  /* safe areas (iPhone) */
+  :root{
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* botões do topo respeitam notch */
+  .site-menu-actions{
+    top: calc(var(--spacing-sm) + var(--safe-top));
+    right: calc(var(--spacing-sm) + var(--safe-right));
+  }
+
+  /* painel do menu: entra inteiro e rola se precisar */
+  .site-menu-card{
+    --safe-gap: 48px;
+    margin: var(--spacing-sm);
+    margin-left: auto;
+    margin-right: calc(var(--spacing-sm) + var(--safe-right) + var(--safe-gap));
+    margin-top:    calc(var(--spacing-sm) + var(--safe-top)   + var(--safe-gap));
+    max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - (var(--safe-gap) + 2*var(--spacing-sm)));
+    overflow: auto;
+  }
+
+  /* alvos de toque mínimos */
+  .icon-link,
+  .goo-item,
+  .site-menu-btn,
+  .dark-mode-toggle{
+    width: 44px; height: 44px;
+  }
+  .icon-24{ width: 24px; height: 24px; }
+
+  /* toast "copiado" sempre visível */
+  .copy-toast{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(16px + var(--safe-bottom));
+    z-index: 1300;
+  }
+
+  /* roda de contatos não estoura */
+  .goo-toolbar{
+    transform: translateY(-50%) scale(.92);
+    transform-origin: right center;
+  }
+}
+
+/* telas bem pequenas */
+@media (max-width: 480px){
+  .icon-link, .goo-item, .site-menu-btn, .dark-mode-toggle{ width: 42px; height: 42px; }
+}
