@@ -40,6 +40,8 @@
   --spacing-lg: 1rem;
   --spacing-xl: 1.5rem;
   --spacing-2xl: 2rem;
+
+  /* controladas via JS de dark/light */
   --footer-ink: var(--text-primary);
   --icon-filter: invert(0);
 
@@ -51,7 +53,7 @@
   --border-color: var(--color-gray-200);
 }
 
-/* Dark mode */
+/* Dark mode (fallback por media) */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-primary: var(--color-gray-900);
@@ -295,7 +297,7 @@ a:hover {
 .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
 
 /* =========================
-   Footer (TELA)
+   Footer (tela)
 ========================= */
 .footer {
   background-color: var(--bg-secondary);
@@ -303,55 +305,51 @@ a:hover {
   border-top: 1px solid var(--border-color);
   margin-top: var(--spacing-lg);
   color: var(--text-secondary);
-  font-size: 0.85rem;}
+  font-size: 0.85rem;
+}
 .footer .container {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;        /* centro vertical no desktop */
   gap: 2rem;
   max-width: 1100px;
   margin: 0 auto;
 }
-.footer {
-  color: var(--footer-ink);
-}
-.footer a {
-  color: var(--footer-ink);
-  text-decoration: underline;
-}
-.themed-icon {
-  filter: var(--icon-filter);
-}
+
+.footer { color: var(--footer-ink); }
+.footer a { color: var(--footer-ink); text-decoration: underline; }
+
+.themed-icon { filter: var(--icon-filter); }
 .contact-icon img,
-.footer-icons img {
-  filter: var(--icon-filter);
-}
+.footer-icons img { filter: var(--icon-filter); }
+
 .f-col strong { margin-bottom: .25rem; }
 .f-col a { margin-top: 0; }
 
-/* Links no footer: brancos e sublinhados (sobrepõe link global) */
-.footer a {
-  color: var(--text-secondary);
-  text-decoration: underline;
-}
-
-/* Ícones do footer */
+/* bloco de ícones à direita */
 .footer-icons {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 .footer-icons img {
-  width: 22.66px;  
+  width: 22.66px;
   height: 22.66px;
   object-fit: contain;
   display: block;
 }
+
+/* bloco de texto à esquerda: duas colunas */
 .footer .brand {
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 2rem;
-  align-items: center; 
+  align-items: center;
+}
+.footer .brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
 }
 .footer .brand-col strong,
 .footer .brand-col a,
@@ -359,49 +357,49 @@ a:hover {
   display: block;
   margin: 0;
 }
-.footer .brand a {
-  display: block; 
-}
-.footer .brand-col {
-  display: flex;
-  flex-direction: column;
-  gap: .25rem;
-}
-
 
 /* =========================
    Responsivo
 ========================= */
 @media (max-width: 900px) {
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  /* footer empilha de forma limpa */
   .footer .container {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: .75rem;
   }
   .footer .brand {
-    grid-template-columns: 1fr; /* cada coluna vira uma linha */
+    grid-template-columns: 1fr;  /* as duas colunas viram linhas */
     row-gap: .5rem;
     justify-items: center;
   }
-  .footer-icons { align-self: center; margin-top: .5rem; }
+  .footer-icons { align-self: center; margin-top: .25rem; }
 }
+
 @media (max-width: 768px) {
   .skills-grid, .contact-grid { grid-template-columns: 1fr !important; }
   .dark-mode-toggle { top: var(--spacing-sm); right: var(--spacing-sm); width: 35px; height: 35px; }
   body { font-size: 13px; }
 }
+
 @media (max-width: 560px) {
+  /* reforça o empilhamento no mobile menor */
   .footer .container {
-    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 1rem;
   }
   .footer .brand {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: .25rem;
   }
 }
+
 @media (max-width: 480px) {
   h1 { font-size: 1.8rem; }
   .card { padding: var(--spacing-md); }
@@ -482,11 +480,14 @@ a:hover {
   .contact-item h3 { font-size: 0.8rem !important; margin-bottom: 0.1rem !important; color: #000 !important; }
   .contact-item a { font-size: 0.7rem !important; color: #333 !important; }
 
-  /* Footer na impressão (mais simples) */
+  /* Footer na impressão (coluna simples) */
   .footer { font-size: 0.75rem !important; }
-  .footer .container { grid-template-columns: 1fr 1fr !important; }
+  .footer .container {
+    display: block !important;
+    text-align: left !important;
+  }
 }
-
+ 
 /* =========================
    Mensagem oculta p/ impressão
 ========================= */
