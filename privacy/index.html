@@ -9,7 +9,7 @@
   <meta name="robots" content="index,follow" />
 
   <!-- CSS compartilhado -->
-  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet" href="../src/css/style.css?v=3" />
   <link rel="icon" type="image/png" href="../src/images/Wandenreich.png" />
 
   <!-- Ajustes visuais apenas desta página (texto puro) -->
@@ -41,7 +41,6 @@
 
   <!-- AÇÕES (dark/light + menu) -->
   <div class="site-menu-actions" aria-label="Ações do site">
-    <!-- Toggle do menu -->
     <input class="site-menu-toggle" type="checkbox" id="site-menu-toggle" />
     <label for="site-menu-toggle" class="site-menu-btn" role="button" aria-label="Abrir menu" aria-controls="site-menu-panel" aria-expanded="false"></label>
 
@@ -83,8 +82,8 @@
             </label>
 
             <div class="goo-toolbar">
-              <!-- ÍCONE E-MAIL: copiar para área de transferência -->
-              <a href="#" class="goo-item copy-email" title="Copiar e-mail" data-copy="kauahenriquepessoal@gmail.com" role="button" aria-label="Copiar e-mail">
+              <!-- Ícone de e-mail: mailto + copia via JS -->
+              <a href="mailto:kauahenriquepessoal@gmail.com" class="goo-item copy-email" data-copy="kauahenriquepessoal@gmail.com" title="E-mail">
                 <img src="../src/images/g_icon.png" alt="E-mail" draggable="false" />
               </a>
               <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer" class="goo-item" title="WhatsApp">
@@ -177,7 +176,7 @@
     </article>
   </main>
 
-  <!-- Rodapé idêntico ao da raiz (paths relativos corrigidos) -->
+  <!-- Rodapé (paths relativos) -->
   <footer class="footer">
     <div class="container">
       <div class="f-col brand">
@@ -191,8 +190,7 @@
         </div>
       </div>
       <div class="footer-icons">
-        <!-- ÍCONE E-MAIL do rodapé: copiar -->
-        <a href="#" class="copy-email" data-copy="kauahenriquepessoal@gmail.com" role="button" aria-label="Copiar e-mail">
+        <a href="mailto:kauahenriquepessoal@gmail.com" class="copy-email" data-copy="kauahenriquepessoal@gmail.com" role="button" aria-label="Copiar e-mail">
           <img class="themed-icon" src="../src/images/g_icon.png" alt="E-mail" draggable="false" />
         </a>
         <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="../src/images/w_icon.png" alt="WhatsApp" draggable="false" /></a>
@@ -207,6 +205,6 @@
   <div id="copy-toast" class="copy-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 
   <!-- JS compartilhado -->
-  <script src="../src/js/main.js"></script>
+  <script defer src="../src/js/main.js?v=3"></script>
 </body>
 </html>
