@@ -766,14 +766,15 @@ a:hover {
   }
 }
 
-/* espaçamento do conteúdo/rodapé */
-main{ padding-bottom: 0 !important; margin-bottom: 0 !important; }
 
 /* filtro gooey fora do fluxo */
 .goo-defs{ position:absolute; width:0; height:0; overflow:hidden; pointer-events:none; }
 
-/* ====== Menu & Gooey robustness (desktop + mobile) ====== */
-.site-menu-panel{ z-index: 1000; }
+/* ===== Gooey ancorado no botão Contato (desktop + mobile) ===== */
+/* Painel fica acima do conteúdo, mas abaixo do botão/hambúrguer */
+.site-menu-panel{ z-index: 1099; }
+
+/* NÃO cortar a roda de contatos dentro do cartão do menu */
 .site-menu-card, .site-menu-list, .site-menu-contact{ overflow: visible !important; }
 
 /* A barra de contato fica FIXED (não é recortada por nada)  */
@@ -795,14 +796,14 @@ main{ padding-bottom: 0 !important; margin-bottom: 0 !important; }
   pointer-events: auto;
 }
 
-/* leve redução no mobile */
+/* Espaço extra no topo para não “encostar” nos botões fixos */
 @media (max-width: 768px){
-  .goo-toolbar{
-    transform: translate(-100%, -50%) scale(.92);
-    transform-origin: right center;
+  .header{
+    padding-top: calc(var(--spacing-2xl) + env(safe-area-inset-top, 0px));
   }
 }
-/* telas bem pequenas */
+
+/* Telas bem pequenas: mantém alvos confortáveis */
 @media (max-width: 480px){
   .icon-link, .goo-item, .site-menu-btn, .dark-mode-toggle{ width: 42px; height: 42px; }
 }
