@@ -434,9 +434,8 @@ a:hover {
 ========================= */
 @media print {
   * {
-    -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important; /* compatível WebKit */
+    print-color-adjust: exact !important;        /* padrão moderno */
   }
 
   @page { size: A4; margin: 0.5in; }
@@ -695,7 +694,14 @@ a:hover {
   pointer-events: none; /* fechado: não clica */
 }
 
-.goo-item img{ width:20px; height:20px; display:block; filter: var(--icon-filter); pointer-events: none; -webkit-user-drag: none; user-drag: none; }
+.goo-item img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  filter: var(--icon-filter);
+  pointer-events: none;
+  -webkit-user-drag: none; /* mantém compatibilidade com Chrome/Safari */
+}
 
 /* aberto: aparece e clica */
 .goo-open:checked ~ .goo-toolbar .goo-item{ opacity:1; pointer-events:auto; }
