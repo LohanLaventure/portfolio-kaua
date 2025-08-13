@@ -803,7 +803,26 @@ a:hover {
   }
 }
 
+@media (max-width: 768px){
+  .header{
+    /* 56px ~ altura do botão + gap; soma safe-area em iPhone */
+    padding-top: calc(var(--spacing-2xl) + 56px + env(safe-area-inset-top, 0px));
+  }
+}
+
 /* Telas bem pequenas: mantém alvos confortáveis */
 @media (max-width: 480px){
   .icon-link, .goo-item, .site-menu-btn, .dark-mode-toggle{ width: 42px; height: 42px; }
 }
+
+/* Em telas bem estreitas, usa 1 coluna pra não quebrar visual */
+@media (max-width: 560px){
+  .skills-grid   { grid-template-columns: 1fr; }
+  .contact-grid  { grid-template-columns: 1fr; }
+}
+
+/* Evita overflow de e-mail/links grandes */
+.contact-item a{
+  overflow-wrap: anywhere;
+}
+
