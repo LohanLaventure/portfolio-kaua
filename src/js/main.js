@@ -294,7 +294,58 @@ document.querySelectorAll('.site-menu-contact a.goo-item').forEach(a => {
     });
   }
 
-  // Bind inicial e após navegação dinâmica, se houver
-  document.addEventListener('DOMContentLoaded', bindAll);
-  bindAll();
+  /* ===== Gooey/Contato: posicionamento robusto (mobile e desktop) ===== */
+function positionGoo(){
+  const menuToggle = document.getElementById('site-menu-toggle');
+  const gooToggle  = document.getElementById('goo-open');
+  const trigger    = document.querySelector('.goo-trigger');
+  const bar        = document.querySelector('.goo-toolbar');
+  if (!trigger || !bar || !gooToggle) return;
+
+  // Só posiciona quando o menu estiver aberto
+  if (menuToggle && !menuToggle.checked) return;
+
+  const tr  = trigger.getBoundingClientRect();
+  const gap = 12; // ajuste fino da distância entre o botão e a barra
+
+  // Ancoragem: colocamos a barra com "left" no lado esquerdo do gatilho
+  // e a transform (CSS) empurra -100% da própria largura, dispensando medir width.
+  bar.style.left = (tr.left - gap) + 'px';
+  bar.style.top  = (tr.top + tr.height / 2) + 'px';
+
+  // Garante que está visível quando o toggle estiver marcado (defensivo)
+  if (gooToggle.checked){
+    bar.style.opacity = '1';
+    bar.style.pointerEvents = 'auto';
+  }
+}
+
+  function bindGoo(){
+    const menuToggle = document.getElementById('site-menu-toggle');
+    const gooToggle  = document.getElementById('goo-open');
+    const trigger    = document.querySelector('.goo-trigger');
+    const bar        = document.querySelector('.goo-toolbar');
+    if (!trigger || !bar || !gooToggle) return;
+
+    // evita que o clique no ícone "Contato" feche o menu por engano
+    trigger.addEventListener('click', (e)=> e.stopPropagation());
+
+    if (menuToggle) {
+      menuToggle.addEventListener('change', () => {
+        if (menuToggle.checked) setTimeout(positionGoo, 0);
+      });
+    }
+    gooToggle.addEventListener('change', () => {
+      if (gooToggle.checked) setTimeout(positionGoo, 0);
+    });
+
+    window.addEventListener('resize', positionGoo, { passive: true });
+    window.addEventListener('scroll',  positionGoo, { passive: true });
+  }
+
+  // Bind inicial
+  document.addEventListener('DOMContentLoaded', () => {
+    bindAll();
+    bindGoo();
+  });
 })();
