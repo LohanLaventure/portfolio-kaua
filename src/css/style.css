@@ -827,7 +827,7 @@ a:hover {
   line-height: 1.08;
   letter-spacing: 0;
   color: var(--text-primary);
-  font-size: clamp(2.4rem, 5.2vw, 3.6rem);
+  font-size: clamp(2.1rem, 5.2vw, 3rem);
 }
 
 .b1 .t2{
