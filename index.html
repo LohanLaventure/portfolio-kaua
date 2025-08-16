@@ -1,154 +1,452 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" id="topo">
 <head>
+ <!-- configurar icons das paginas --> 
+  <script>
+  (function () {
+    var base = document.createElement('base');
+    var repo = 'portfolio-kaua';                 // <<< seu repositório
+    var isFile = location.protocol === 'file:';  // abrindo com file://
+    var isGH   = /github\.io$/.test(location.hostname);
+    base.href  = isFile ? './' : (isGH ? '/' + repo + '/' : '/');
+    document.head.prepend(base);
+  })();
+</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kauã Henrique - Em Construção</title>
+  <title>Portfólio - Kauã Henrique</title>
 
-  <meta name="description" content="Homepage em construção. Acesse meu currículo e outros links no menu." />
-  <link rel="canonical" href="./">
+  <!-- SEO básico -->
+  <meta name="description" content="Kauã Henrique - automação de processos, RPA e melhoria contínua. Portfólio com projetos e currículo." />
+  <link rel="canonical" href="https://lohanlaventure.github.io/portfolio-kaua/" />
 
-  <!-- OG/Twitter (mínimo viável) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lohanlaventure.github.io/portfolio-kaua/" />
-  <meta property="og:title" content="Kauã Henrique — Em Construção" />
-  <meta property="og:description" content="Veja meu currículo enquanto a homepage fica pronta." />
-  <meta property="og:image" content="https://lohanlaventure.github.io/portfolio-kaua/src/images/Wandenreich.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kauã Henrique — Em Construção" />
-  <meta name="twitter:description" content="Veja meu currículo enquanto a homepage fica pronta." />
-  <meta name="twitter:image" content="https://lohanlaventure.github.io/portfolio-kaua/src/images/Wandenreich.png" />
+  <!-- Open Graph/Twitter (mesmo padrão do site atual) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lohanlaventure.github.io/portfolio-kaua/">
+  <meta property="og:title" content="Kauã Henrique – Automação & Melhoria Contínua">
+  <meta property="og:description" content="Especialista em automação, RPA e melhoria contínua.">
+  <meta property="og:image" content="https://lohanlaventure.github.io/portfolio-kaua/src/images/Wandenreich.png">
+  <meta property="og:site_name" content="Portfólio de Kauã Henrique">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kauã Henrique – Automação & Melhoria Contínua">
+  <meta name="twitter:description" content="Automação, RPA e melhoria contínua.">
+  <meta name="twitter:image" content="https://lohanlaventure.github.io/portfolio-kaua/src/images/Wandenreich.png">
 
-  <link rel="icon" type="image/png" href="src/images/Wandenreich.png" />
-  <link rel="stylesheet" href="src/css/style.css?v=7" />
+  <!-- Estilos principais -->
+  <link rel="stylesheet" href="./src/css/style.css?v=7" />
+  <link rel="icon" type="image/png" href="./src/images/Wandenreich.png" />
+
+  <!-- Estilos específicos desta home -->
+  <style>
+    :root{
+      --space-hero-top: 5cm; 
+      --space-b1-b2:   2.5cm;
+      --space-b2-b3:   7cm;
+      --font-hero: "Times New Roman", Times, serif;
+    }
+    @media (max-width: 900px){
+      :root{
+        /* Fallback em telas menores (aproxima a intenção em vh) */
+        --space-hero-top: min(10vh, 80px);
+        --space-b1-b2:    min(6vh, 40px);
+        --space-b2-b3:    min(14vh, 120px);
+        --brand-navy-900: #0b1424;
+      }
+    }
+
+    /* ---------- Splash ---------- */
+    #splash{
+      position: fixed; inset: 0;
+      display: grid; place-items: center;
+      z-index: 20000;
+      opacity: 1;
+      pointer-events: none;
+      background: var(--splash-bg, #000) !important;
+    }
+    #splash img{
+      width: clamp(120px, 26vmin, 260px);
+      height: auto;
+      opacity: 0;
+      will-change: opacity, transform, filter;
+      transform: translateZ(0);
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: var(--splash-icon-filter, none) !important;
+    }
+
+    /* ---------- Hero (3 blocos) ---------- */
+    .hero{ background: none; } /* sem faixa/gradiente no topo */
+    .hero .container{ max-width: 1100px; }
+    .hero{ position: relative; }
+
+    .b1, .b2, .b3{
+      margin-left: 0;
+      margin-right: auto;
+      max-width: 880px;
+    }
+    .b1{ margin-top: var(--space-hero-top); }
+    .b1{ position: relative; z-index: 1;}
+    .b2{ margin-top: var(--space-b1-b2); }
+    .b3{ margin-top: var(--space-b2-b3); }
+
+    .b1 .t1{
+      font-size: clamp(0.6rem, 2.1vw, 0.8rem); 
+      color: var(--color-blue-500);   
+      margin-bottom: .35rem;
+    }
+    .b1 .t2{
+      font-family: var(--font-hero);
+      font-weight: 700;     
+      line-height: 1.2;
+      letter-spacing: 0;
+      font-size: clamp(4rem, 4vw, 5rem)
+    }
+    .b1 .t2 .hl{
+      position: relative;
+      display: inline-block;
+    }
+    .b1 .t2 .hl::after{
+      content:"";
+      position: absolute; left: 0; right: 0; bottom: .08em;
+      height: .3em;
+      background: color-mix(in oklab, var(--color-blue-500) 28%, transparent);
+      z-index: -1;
+      border-radius: 4px;
+    }
+
+    .b2 p{
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--text-secondary);
+    }
+
+    .b3 h2{
+      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+      margin-bottom: .75rem;
+      text-align: left; /* sem “animaçãozão” e sem centralizar */
+    }
+
+    /* ---------- Ícones do stack ---------- */
+    .stack-icons{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(60px, 1fr));
+      gap: clamp(14px, 3vw, 28px);
+      align-items: center;
+      justify-items: center;
+      margin-top: .25rem;
+      will-change: filter, opacity, transform;
+      transform: translateZ(0);
+    }
+    @media (max-width: 680px){
+      .stack-icons{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+  .stack-icons img{
+    width: clamp(48px, 8vw, 72px);
+    height: clamp(48px, 8vw, 72px);
+    object-fit: contain;
+    /* Cor vem da VAR; blur vem de outra VAR que o JS só atualiza */
+    filter: var(--stack-filter-base) blur(var(--stack-blur, 12px));
+    opacity: 0;
+    transform: scale(.98);
+    transition: transform .25s ease;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+    .stack-icons img:hover{
+      transform: scale(1.03);
+    }
+
+    /* ---------- CTA final ---------- */
+    .cta-band{
+      margin-top: clamp(40px, 8vh, 96px);
+      padding: clamp(12px, 2.2vw, 20px) 0;
+      background: none;
+    }
+    .cta-grid{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: clamp(10px, 2vw, 18px);
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 var(--spacing-lg);
+    }
+    @media(max-width: 800px){
+      .cta-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    .cta{
+      display: block;
+      text-align: center;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .cta:hover{
+      transform: translateY(-1px);
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+  </style>
 </head>
-
 <body>
-  <!-- filtro gooey -->
-  <svg class="goo-defs" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="goo"><feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="8" /><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /><feBlend in2="goo" in="SourceGraphic" result="mix" /></filter></defs></svg>
+  <!-- Filtro SVG gooey fora do fluxo (mesmo do site) -->
+  <svg class="goo-defs" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="8" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feBlend in2="goo" in="SourceGraphic" result="mix" />
+      </filter>
+    </defs>
+  </svg>
 
-  <!-- AÇÕES -->
+  <!-- Splash -->
+  <div id="splash" aria-hidden="true">
+    <img src="./src/images/kanji.svg" alt="Kanji" draggable="false" />
+  </div>
+
+  <!-- AÇÕES (dark/light + menu) -->
   <div class="site-menu-actions" aria-label="Ações do site">
     <input class="site-menu-toggle" type="checkbox" id="site-menu-toggle" />
     <label for="site-menu-toggle" class="site-menu-btn" role="button" aria-label="Abrir menu" aria-controls="site-menu-panel" aria-expanded="false"></label>
 
-    <nav class="site-menu-panel" id="site-menu-panel" aria-hidden="true">
-      <div class="site-menu-card">
-        <ul class="site-menu-list">
-          <!-- Página Inicial -->
-          <li>
-            <a class="icon-link" href="index.html" data-tip="Página Inicial" aria-label="Página Inicial" title="Página Inicial">
-              <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></svg>
-            </a>
-          </li>
+<nav class="site-menu-panel" id="site-menu-panel" aria-hidden="true">
+  <div class="site-menu-card">
+    <ul class="site-menu-list">
+      <li>
+        <a class="icon-link" href="./index.html" data-tip="Página Inicial" aria-label="Página Inicial" title="Página Inicial">
+          <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/>
+          </svg>
+        </a>
+      </li>
 
-          <!-- Projetos (deixa como está) -->
-          <li>
-            <a class="icon-link" href="index.html" data-tip="Projetos" aria-label="Projetos" title="Projetos">
-              <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true"><path d="M9.5 7 5 12l4.5 5M14.5 7 19 12l-4.5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </li>
+      <li>
+        <a class="icon-link" href="./projetos/index.html" data-tip="Projetos" aria-label="Projetos" title="Projetos">
+          <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
+            <path d="M9.5 7 5 12l4.5 5M14.5 7 19 12l-4.5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </li>
 
-          <!-- Currículo -> cv/index.html -->
-          <li>
-            <a class="icon-link" href="cv/index.html" data-tip="Currículo" aria-label="Currículo" title="Currículo">
-              <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
-                <path d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="currentColor" opacity=".15"/>
-                <path d="M14 2v4h4M8 10h8M8 14h8M8 18h6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-              </svg>
-            </a>
-          </li>
+      <li>
+        <a class="icon-link" href="cv/index.html" data-tip="Currículo" aria-label="Currículo" title="Currículo">
+          <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
+            <path d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="currentColor" opacity=".15"/>
+            <path d="M14 2v4h4M8 10h8M8 14h8M8 18h6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </li>
 
-          <!-- Sobre (deixa como está) -->
-          <li>
-            <a class="icon-link" href="index.html" data-tip="Sobre" aria-label="Sobre" title="Sobre">
-              <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </a>
-          </li>
+      <li>
+        <a class="icon-link" href="./sobre/index.html" data-tip="Sobre" aria-label="Sobre" title="Sobre">
+          <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </li>
 
-          <!-- Contato (gooey) -->
-          <li class="site-menu-contact">
-            <input type="checkbox" id="goo-open" class="goo-open" />
-            <label for="goo-open" class="icon-link goo-trigger" aria-label="Contato" data-tip="Contato">
-              <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
-                <circle cx="18" cy="5" r="2" fill="currentColor" />
-                <circle cx="6"  cy="12" r="2" fill="currentColor" />
-                <circle cx="18" cy="19" r="2" fill="currentColor" />
-                <path d="M8 12l8-7M8 12l8 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
-              </svg>
-            </label>
+      <!-- Contato / Gooey (UMA ÚNICA VEZ) -->
+      <li class="site-menu-contact">
+        <input type="checkbox" id="goo-open" class="goo-open" />
+        <label for="goo-open" class="icon-link goo-trigger" aria-label="Contato" data-tip="Contato">
+          <svg viewBox="0 0 24 24" class="icon-24" aria-hidden="true">
+            <circle cx="18" cy="5" r="2" fill="currentColor" />
+            <circle cx="6"  cy="12" r="2" fill="currentColor" />
+            <circle cx="18" cy="19" r="2" fill="currentColor" />
+            <path d="M8 12l8-7M8 12l8 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+          </svg>
+        </label>
 
-            <div class="goo-toolbar">
-              <a href="mailto:kauahenriquepessoal@gmail.com" class="goo-item copy-email" data-copy="kauahenriquepessoal@gmail.com" title="E-mail">
-                <img src="src/images/g_icon.png" alt="E-mail" draggable="false" />
-              </a>
-              <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer" class="goo-item" title="WhatsApp">
-                <img src="src/images/w_icon.png" alt="WhatsApp" draggable="false" />
-              </a>
-              <a href="https://www.linkedin.com/in/kau%C3%A3-henrique-864a0124a/" target="_blank" rel="noopener noreferrer" class="goo-item" title="LinkedIn">
-                <img src="src/images/l_icon.png" alt="LinkedIn" draggable="false" />
-              </a>
-              <a href="https://github.com/LohanLaventure" target="_blank" rel="noopener noreferrer" class="goo-item" title="GitHub">
-                <img src="src/images/git_icon.png" alt="GitHub" draggable="false" />
-              </a>
-              <a href="https://instagram.com/laventure_software" target="_blank" rel="noopener noreferrer" class="goo-item" title="Instagram">
-                <img src="src/images/ig_icon.png" alt="Instagram" draggable="false" />
-              </a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
+        <div class="goo-toolbar">
+          <a href="mailto:kauahenriquepessoal@gmail.com" class="goo-item copy-email" data-copy="kauahenriquepessoal@gmail.com" title="E-mail">
+            <img src="./src/images/g_icon.png" alt="E-mail" draggable="false" />
+          </a>
+          <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer" class="goo-item" title="WhatsApp">
+            <img src="./src/images/w_icon.png" alt="WhatsApp" draggable="false" />
+          </a>
+          <a href="https://www.linkedin.com/in/kau%C3%A3-henrique-864a0124a/" target="_blank" rel="noopener noreferrer" class="goo-item" title="LinkedIn">
+            <img src="./src/images/l_icon.png" alt="LinkedIn" draggable="false" />
+          </a>
+          <a href="https://github.com/LohanLaventure" target="_blank" rel="noopener noreferrer" class="goo-item" title="GitHub">
+            <img src="./src/images/git_icon.png" alt="GitHub" draggable="false" />
+          </a>
+          <a href="https://instagram.com/laventure_software" target="_blank" rel="noopener noreferrer" class="goo-item" title="Instagram">
+            <img src="./src/images/ig_icon.png" alt="Instagram" draggable="false" />
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
   </div>
 
-  <main id="content" role="main">
-     <header class="header" id="home"> 
-    <div style="text-align:center">
-        <h1>Ops… esta área está em construção 🚧</h1>
-        <p>Enquanto isso, confira meu <a href="cv/index.html">currículo</a> 📄</p>
-        <p>Explore outras partes pelo menu flutuante ✨</p>
-      </div>
-      </header> 
-  </main>
+  <!-- Conteúdo -->
+<main id="content" role="main" class="hero">
+  <div class="container">
 
+<!-- ÍCONES: cena de entrada (deixe vazio) -->
+<div class="icon-stage" aria-hidden="true"></div>
+
+    <!-- BLOCO 1 -->
+    <section class="b1" aria-labelledby="b1t1">
+      <p id="b1t1" class="t1">
+        <strong class="typewrite" data-text="OLÁ, EU ME CHAMO KAUÃ HENRIQUE E"></strong>
+      </p>
+
+      <p class="t2">
+        <span class="typewrite" data-text="Eu "></span>
+        <span class="hl">
+          <span class="typewrite" data-text="automatizo processos"></span>
+        </span>
+        <span class="typewrite" data-text="."></span>
+      </p>
+    </section>
+
+    <!-- BLOCO 2 (revela depois) -->
+    <section class="b2 reveal-late">
+      <p>Sou estudante de Engenharia da Computação e este é o meu portfólio. Aqui você encontrará projetos, currículo e exemplos de como transformo tarefas repetitivas em fluxos automatizados e inteligentes.</p>
+    
+    <!-- Botões -->
+    <div class="botoes hidden" id="botoes-bloco2">
+      <a href="sobre.html" class="btn">Me conheça</a>
+      <a href="projetos.html" class="btn">Meus projetos</a>
+    </div>
+    </section>
+  </div>
+</main>
+
+  <!-- Footer (idêntico ao original) -->
   <footer class="footer">
     <div class="container">
       <div class="f-col brand">
         <div class="brand-col">
           <strong>© 2025</strong>
-          <a href="index.html">Kauã Henrique</a>
+          <a href="./index.html">Kauã Henrique</a>
         </div>
         <div class="brand-col">
           <strong>Sobre</strong>
-          <a href="privacy/index.html">Política de Privacidade</a>
+          <a href="./privacy/index.html">Política de Privacidade</a>
         </div>
       </div>
 
       <div class="footer-icons">
-        <a href="mailto:kauahenriquepessoal@gmail.com" class="copy-email" data-copy="kauahenriquepessoal@gmail.com">
-          <img class="themed-icon" src="src/images/g_icon.png" alt="E-mail" draggable="false" />
+        <a href="mailto:kauahenriquepessoal@gmail.com" class="copy-email" data-copy="kauahenriquepessoal@gmail.com" target="_blank" rel="noopener noreferrer">
+          <img class="themed-icon" src="./src/images/g_icon.png" alt="E-mail" draggable="false" />
         </a>
-        <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="src/images/w_icon.png" alt="WhatsApp" draggable="false" /></a>
-        <a href="https://www.linkedin.com/in/kau%C3%A3-henrique-864a0124a/" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="src/images/l_icon.png" alt="LinkedIn" draggable="false" /></a>
-        <a href="https://instagram.com/laventure_software" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="src/images/ig_icon.png" alt="Instagram" draggable="false" /></a>
-        <a href="https://github.com/LohanLaventure" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="src/images/git_icon.png" alt="Github" draggable="false" /></a>
+        <a href="https://wa.me/556592763325" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="./src/images/w_icon.png" alt="WhatsApp" draggable="false" /></a>
+        <a href="https://www.linkedin.com/in/kau%C3%A3-henrique-864a0124a/" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="./src/images/l_icon.png" alt="LinkedIn" draggable="false" /></a>
+        <a href="https://instagram.com/laventure_software" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="./src/images/ig_icon.png" alt="Instagram" draggable="false" /></a>
+        <a href="https://github.com/LohanLaventure" target="_blank" rel="noopener noreferrer"><img class="themed-icon" src="./src/images/git_icon.png" alt="Github" draggable="false" /></a>
       </div>
     </div>
   </footer>
 
+  <!-- Toast reaproveitado -->
   <div id="copy-toast" class="copy-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
 
-  <script src="src/js/main.js?v=6" defer></script>
+  <!-- Scripts principais -->
+  <script src="./src/js/main.js?v=6" defer></script>
 
-  <!-- Só ARIA do menu; nada de script de tema aqui -->
-  <script>
-    (function(){
-      const t = document.getElementById('site-menu-toggle');
-      const b = document.querySelector('.site-menu-btn');
-      const p = document.getElementById('site-menu-panel');
-      function sync(){ const open = t.checked; b.setAttribute('aria-expanded', String(open)); p.setAttribute('aria-hidden', String(!open)); }
-      t.addEventListener('change', sync); sync();
-    })();
-  </script>
+<!-- Script específico desta home -->
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ---------- Splash (rAF) ---------- */
+  const splash = document.getElementById('splash');
+  if (splash){
+    const logo = splash.querySelector('img');
+    let start = null;
+    const tIn = 700, tHold = 300, tOut = 600;
+
+    function step(ts){
+      if (!start) start = ts;
+      const t = ts - start;
+
+      if (t < tIn){
+        logo.style.opacity = (t / tIn).toFixed(3);
+        requestAnimationFrame(step);
+        return;
+      }
+      if (t < tIn + tHold){
+        logo.style.opacity = '1';
+        requestAnimationFrame(step);
+        return;
+      }
+      if (t < tIn + tHold + tOut){
+        const p = (t - tIn - tHold) / tOut;
+        splash.style.opacity = (1 - p).toFixed(3);
+        requestAnimationFrame(step);
+        return;
+      }
+      splash.remove();
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- Stack: blur/opacity/scale via rAF (cor vem do CSS) ---------- */
+  const stackBox  = document.querySelector('.stack-icons');
+  const stackImgs = Array.from(document.querySelectorAll('.stack-icons img'));
+  let ticking = false;
+
+  function updateStack(){
+    if (!stackBox) return;
+
+    const rect = stackBox.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const center = vh * 0.5;
+
+    // Janelas: entra → estabiliza (~0.5 tela) → sai
+    const start       = -vh * 0.20;
+    const stableStart =  vh * 0.10;
+    const stableEnd   =  vh * 0.60;
+    const end         =  vh * 0.90;
+
+    const y = rect.top - center;
+    let blur = 12, opacity = 0, scale = .98;
+
+    if (y < end && y > start){
+      if (y <= stableStart){
+        const p = (y - start) / (stableStart - start);
+        blur = 12 * (1 - p);
+        opacity = p;
+        scale = .98 + .02 * p;
+      } else if (y <= stableEnd){
+        blur = 0; opacity = 1; scale = 1.0;
+      } else {
+        const p = (y - stableEnd) / (end - stableEnd);
+        blur = 12 * p;
+        opacity = 1 - p;
+        scale = 1.0 - .02 * p;
+      }
+    } else if (y <= start){
+      blur = 0; opacity = 1; scale = 1.0;
+    }
+
+    // Só mexe no blur via variável CSS; o tema cuida da cor (preto/branco)
+    stackBox.style.setProperty('--stack-blur', blur.toFixed(1) + 'px');
+    stackImgs.forEach(img => {
+      img.style.opacity   = opacity.toFixed(2);
+      img.style.transform = 'scale(' + scale.toFixed(3) + ')';
+    });
+
+    ticking = false;
+  }
+
+  function onScroll(){
+    if (!ticking){ ticking = true; requestAnimationFrame(updateStack); }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  updateStack(); // estado inicial
+});
+</script>
 </body>
 </html>
