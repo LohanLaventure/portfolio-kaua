@@ -101,19 +101,6 @@
       color: var(--color-blue-500);   
       margin-bottom: .35rem;
     }
-    .b1 .t2 .hl{
-      position: relative;
-      display: inline-block;
-    }
-    .b1 .t2 .hl::after{
-      content:"";
-      position: absolute; left: 0; right: 0; bottom: .08em;
-      height: .3em;
-      background: color-mix(in oklab, var(--color-blue-500) 28%, transparent);
-      z-index: -1;
-      border-radius: 4px;
-    }
-
     .b2 p{
       font-size: clamp(1rem, 2.2vw, 1.25rem);
       color: var(--text-secondary);
@@ -299,13 +286,12 @@
         <strong class="typewrite" data-text="OLÁ, EU ME CHAMO KAUÃ HENRIQUE E"></strong>
       </p>
 
-      <p class="t2">
-        <span class="typewrite" data-text="Eu "></span>
-        <span class="hl">
-          <span class="typewrite" data-text="automatizo processos"></span>
-        </span>
-        <span class="typewrite" data-text="."></span>
-      </p>
+    <p class="t2">
+      <span class="typewrite" data-text="Eu "></span>
+      <span class="hl">
+        <span class="typewrite" data-text="automatizo processos."></span>
+      </span>
+    </p>
     </section>
 
     <!-- BLOCO 2 (revela depois) -->
