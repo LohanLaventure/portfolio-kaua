@@ -845,34 +845,28 @@ a:hover {
 html, body{ overflow-x: hidden; }
 
 .b1 .t2 .hl{
-  position: relative;
-  display: inline; 
-  padding: 0;    
+  display: inline;
+  white-space: normal;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.24em;  
+  text-underline-offset: 0.18em;  
+  text-decoration-skip-ink: none;
+  -webkit-text-decoration-skip: none;
+  text-decoration-color: color-mix(in oklab, var(--color-blue-500) 28%, transparent);
+  background: none;
+  border: 0;
 }
-.b1 .t2 .hl::after{
-  content:"";
-  position:absolute; left:0; right:0; bottom:.08em;
-  height:.3em;
-  background: color-mix(in oklab, var(--color-blue-500) 28%, transparent);
-  border-radius:4px;
-
-  /* novo: começa invisível e “sem largura” */
-  opacity:0;
-  transform:scaleX(0);
-  transform-origin:left center;
-  transition:opacity .25s ease, transform .25s ease;
-}
-/* quando ligar, o traço aparece e acompanha a largura do texto digitado */
-.b1 .t2 .hl.hl-on::after{
-  opacity:1;
-  transform:scaleX(1);
+.b1 .t2 .hl::before,
+.b1 .t2 .hl::after{ content:none !important; }
+.b1 .t2 .hl.hl-on{
+  text-decoration-color: color-mix(in oklab, var(--color-blue-500) 28%, transparent);
 }
 
 .typewrite{
-  display:inline-block;
-  white-space: pre-wrap;   
+  display:inline;     
+  white-space: pre-wrap;
   overflow-wrap: anywhere;
-  position: relative;
+  position: relative;      
 }
 
 .typewrite::after{
