@@ -40,25 +40,17 @@
 
   <!-- Estilos específicos desta home -->
   <style>
-    @media (max-width: 560px){
-    .b1 .t2{
-      font-size: clamp(1.6rem, 8.2vw, 2.1rem);
-      line-height: 1.12; 
-    }
-    .b1 .t2 .hl::after{
-      height: .22em;
-    }
-    }
     :root{ --vhUnit: 1vh; }
     @supports (height: 100dvh){
     :root{ --vhUnit: 1dvh; }
     }
-    :root{
-      --space-hero-top: 5cm; 
-      --space-b1-b2:   2.5cm;
-      --space-b2-b3:   7cm;
-      --font-hero: "Times New Roman", Times, serif;
-    }
+  :root{
+    --space-hero-top: clamp(24px, 8vh, 96px);     /* já está bom */
+    --space-b1-b2:    clamp(48px, 6vh, 96px);     /* ~2.5cm */
+    --space-b2-b3:    clamp(160px, 18vh, 280px);  /* ~7cm */
+    --font-hero: "Times New Roman", Times, serif;
+  }
+
     @media (max-width: 900px){
       :root{
         /* Fallback em telas menores (aproxima a intenção em vh) */
@@ -108,13 +100,6 @@
       font-size: clamp(0.6rem, 2.1vw, 0.8rem); 
       color: var(--color-blue-500);   
       margin-bottom: .35rem;
-    }
-    .b1 .t2{
-      font-family: var(--font-hero);
-      font-weight: 700;     
-      line-height: 1.2;
-      letter-spacing: 0;
-      font-size: clamp(4rem, 4vw, 5rem)
     }
     .b1 .t2 .hl{
       position: relative;
