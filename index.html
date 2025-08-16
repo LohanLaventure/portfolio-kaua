@@ -40,6 +40,15 @@
 
   <!-- Estilos específicos desta home -->
   <style>
+    @media (max-width: 560px){
+    .b1 .t2{
+      font-size: clamp(1.6rem, 8.2vw, 2.1rem);
+      line-height: 1.12; 
+    }
+    .b1 .t2 .hl::after{
+      height: .22em;
+    }
+    }
     :root{ --vhUnit: 1vh; }
     @supports (height: 100dvh){
     :root{ --vhUnit: 1dvh; }
