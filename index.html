@@ -40,6 +40,10 @@
 
   <!-- Estilos específicos desta home -->
   <style>
+    :root{ --vhUnit: 1vh; }
+    @supports (height: 100dvh){
+    :root{ --vhUnit: 1dvh; }
+    }
     :root{
       --space-hero-top: 5cm; 
       --space-b1-b2:   2.5cm;
@@ -316,8 +320,8 @@
     
     <!-- Botões -->
     <div class="botoes hidden" id="botoes-bloco2">
-      <a href="sobre.html" class="btn">Me conheça</a>
-      <a href="projetos.html" class="btn">Meus projetos</a>
+      <a href="./sobre/index.html" class="btn">Me conheça</a>
+      <a href="./projetos/index.html" class="btn">Meus projetos</a>
     </div>
     </section>
   </div>

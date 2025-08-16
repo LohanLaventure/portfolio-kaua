@@ -830,6 +830,20 @@ a:hover {
   font-size: clamp(2.2rem, 6vw, 4rem);
 }
 
+.b1 .t2{
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.12;
+}
+
+/* mobile: deixa o tamanho mais confortável */
+@media (max-width: 480px){
+  .b1 .t2{ font-size: clamp(2rem, 10vw, 2.75rem); }
+}
+
+/* corta qualquer rolagem lateral acidental */
+html, body{ overflow-x: hidden; }
+
 /* destaque atrás de “automatizo” */
 .b1 .t2 .hl{
   position: relative;
@@ -857,7 +871,8 @@ a:hover {
 
 .typewrite{
   display:inline-block;
-  white-space:pre;
+  white-space: pre-wrap;   
+  overflow-wrap: anywhere;
   position: relative;
 }
 
@@ -915,7 +930,7 @@ a:hover {
 @keyframes fly-up{
   0%   { transform: translateY(0);      opacity: 0; }
   15%  {                               opacity: .9; }
-  100% { transform: translateY(-120vh); opacity: .25; }
+  100% { transform: translateY(calc(-120 * var(--vhUnit))); opacity: .25; }
 }
 
 /* Ícones flutuantes (partículas) */
@@ -937,7 +952,7 @@ a:hover {
 }
 @keyframes rise{
   from { transform: translateY(0); }
-  to   { transform: translateY(-120vh); }
+  to   { transform: translateY(calc(-120 * var(--vhUnit))); }
 }
 @keyframes sway{
   from { transform: translateX(calc(-1 * var(--amp, 18px))); }
