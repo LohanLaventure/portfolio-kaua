@@ -1014,3 +1014,16 @@ html, body{ overflow-x: hidden; }
   margin-top: 16px;
   flex-wrap: wrap; 
 }
+
+/* Título menor só no mobile */
+@media (max-width: 560px){
+  .b1 .t2{
+    /* ajuste fino do tamanho */
+    font-size: clamp(1.6rem, 8.2vw, 2.1rem);
+    line-height: 1.12; /* confortável */
+  }
+  /* sublinhado um pouco mais fino no mobile */
+  .b1 .t2 .hl::after{
+    height: .22em;
+  }
+}
